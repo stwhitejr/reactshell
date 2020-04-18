@@ -1,3 +1,4 @@
-import { actionTypes } from '../constants';
-
-export const addArticle = article => ({ type: actionTypes.ADD_ARTICLE, payload: article});
+// Types
+export const ADD_ARTICLE = 'ADD_ARTICLE'
+// Actions
+export const addArticle = article => ({ type: ADD_ARTICLE, payload: article});

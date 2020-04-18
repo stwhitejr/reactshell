@@ -1,16 +1,23 @@
 import React from 'react';
-import { render } from 'react-dom';
-import { Provider } from 'react-redux';
-import Page from './containers/Page';
-import rootReducer from './reducers';
-import { createStore } from 'redux'
-// import './style/main.css';
+import {render} from 'react-dom';
+import {Provider} from 'react-redux';
+import App from '@root/app/app';
+import {articlesReducer} from '@root/reducers';
+import configureStore from '@root/modules/configure_store';
 
-const store = createStore(rootReducer)
+const store = configureStore({
+  reducers: {
+    articles: articlesReducer,
+  },
+  state: {
+    articles: [],
+  },
+});
 
 render(
   <Provider store={store}>
-    <Page />
+    <App />
   </Provider>,
+  // eslint-disable-next-line no-undef
   document.getElementById('root')
-)
+);

@@ -1,23 +1,16 @@
-import { actionTypes } from "./constants";
+import {ADD_ARTICLE} from '@root/actions';
 
-const initialState = {
-  articles: []
-};
-
-const rootReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case actionTypes.ADD_ARTICLE:
-      state.articles.push(action.payload);
-      return {
-        ...state,
-        articles: [
-          ...state.articles,
-          action.payload
-        ]
-      };
+// Reducers
+const articlesReducer = (state = [], {type, payload}) => {
+  switch (type) {
+    case ADD_ARTICLE:
+      return [...state, payload];
     default:
       return state;
   }
 };
 
-export default rootReducer;
+// Selectors
+const selectArticles = state => state.articles;
+
+export {articlesReducer, selectArticles};
