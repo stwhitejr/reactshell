@@ -11,10 +11,10 @@ export const Button = styled.button`
   cursor: pointer;
   outline: none;
   &:hover {
-    background: ${colors.light}
+    background: ${colors.light};
   }
 
-  ${props =>
+  ${(props) =>
     props.primary &&
     css`
       background: ${colors.primary};
