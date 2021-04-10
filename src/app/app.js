@@ -1,43 +1,60 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import Button from '@root/components/button';
-import {addArticle} from '@root/actions';
-import {selectArticles} from '@root/reducers';
+import React, {useState, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {Button, TextInput, Box, Icon} from '@root/components/index';
+import fetchInitialData from '@root/core/redux/thunks/fetch_initial_data';
+import {selectPeopleAll, addPerson} from '@root/core/redux/people_slice';
 import '@root/app/app.scss';
 
 // import Logo from '@root/media/images/logo_white.png';
 
-const mapDispatchToProps = {
-  addArticle,
+const defaults = {
+  age: 0,
+  music: 'pop',
+  color: 'gray',
 };
-const mapStateToProps = state => ({
-  articles: selectArticles(state),
-});
 
-class App extends Component {
-  static propTypes = {
-    articles: PropTypes.array.isRequired,
-    addArticle: PropTypes.func.isRequired,
-  };
-
-  handleClick = () => this.props.addArticle(Math.random());
-
-  render() {
-    return (
-      <div>
-        <Button primary onClick={this.handleClick}>
-          Click ME!
-        </Button>
-        <i class="fab fa-facebook-square" />
-        {this.props.articles.map(article => (
-          <p key={article}>{article}</p>
-        ))}
-      </div>
+const App = () => {
+  // Local
+  const [value, setValue] = useState('');
+  // Redux
+  const dispatch = useDispatch();
+  const people = useSelector(selectPeopleAll);
+  const handleClick = () =>
+    dispatch(
+      addPerson({
+        name: value,
+        ...defaults,
+      })
     );
-  }
-}
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+
+  // Lifecycle
+  useEffect(() => {
+    dispatch(fetchInitialData());
+  }, [dispatch]);
+
+  return (
+    <div className="App">
+      <TextInput
+        placeholder="Type something"
+        value={value}
+        onChange={({target: {value}}) => setValue(value)}
+      />
+      <Button primary onClick={handleClick}>
+        Update
+      </Button>
+      <Icon icon="fa-facebook-square" />
+      {people.map((person) => (
+        <Box
+          key={person.name}
+          p={1}
+          color="light"
+          style={{border: 'solid 1px red'}}
+        >
+          {person.name}
+        </Box>
+      ))}
+    </div>
+  );
+};
+
+export default App;

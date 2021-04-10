@@ -154,7 +154,7 @@ module.exports = {
     'react/prefer-stateless-function': ['error', {ignorePureComponents: true}],
     'react/self-closing-comp': 'error',
     'react/sort-comp': 'error',
-    'react/forbid-component-props': ['error', {forbid: ['style']}],
+    'react/forbid-component-props': ['off'],
     'react/forbid-prop-types': ['error', {forbid: ['any']}],
     'react/jsx-boolean-value': ['error', 'never'],
     'react/no-unsafe': ['warn', {checkAliases: true}],

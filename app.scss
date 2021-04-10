@@ -29,5 +29,9 @@ $body: Lato, Helevtica, Arial, sans-serif;
 
 html, body {
   height: 100%;
+  margin: 0;
+}
+
+body {
   background-color: $base;
 }
